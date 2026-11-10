@@ -659,7 +659,15 @@ html,body{width:100%;max-width:100%;overflow-x:clip}
 body:has(#secretOverlay:not([hidden])){overflow:hidden!important}
 @media(max-width:420px){#secretOverlay .secret-card{padding:22px 17px!important}#app .layout{width:100%}}
 </style>
-<style id="md-secret-overlay-stability">#secretOverlay[hidden],#wifeApp[hidden]{display:none!important}#secretOverlay:not([hidden]){position:fixed!important;inset:0!important;z-index:99998!important;display:flex!important;align-items:center!important;justify-content:center!important;padding:16px!important;box-sizing:border-box!important;overflow:auto!important}#secretOverlay .secret-card{position:relative!important;width:min(100%,390px)!important;max-height:calc(100dvh - 32px);overflow:auto;margin:auto!important}#secretOverlay input{font-size:16px!important}html,body{max-width:100%;overflow-x:hidden}</style></head>
+<style id="md-secret-overlay-stability">#secretOverlay[hidden],#wifeApp[hidden]{display:none!important}#secretOverlay:not([hidden]){position:fixed!important;inset:0!important;z-index:99998!important;display:flex!important;align-items:center!important;justify-content:center!important;padding:16px!important;box-sizing:border-box!important;overflow:auto!important}#secretOverlay .secret-card{position:relative!important;width:min(100%,390px)!important;max-height:calc(100dvh - 32px);overflow:auto;margin:auto!important}#secretOverlay input{font-size:16px!important}html,body{max-width:100%;overflow-x:hidden}</style>
+<!-- PWA: metadados de instalação; não altera o layout -->
+<link rel="manifest" href="./manifest.webmanifest">
+<meta name="theme-color" content="#110c1d">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="My Diary">
+<link rel="apple-touch-icon" href="./icon-192.png">
+</head>
 <body>
 <div id="mdAdaptiveLoader" role="status" aria-live="polite" aria-label="Preparando My Diary"><div class="md-loader-center"><div class="md-loader-emblem"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15" r="1"/></svg></div><div class="md-loader-title">My Diary</div><div class="md-loader-sub">SEU ESPAÇO PESSOAL</div></div><div class="md-loader-foot"><div class="md-loader-indeterminate"></div><span id="mdLoaderMessage">Preparando seu espaço...</span></div></div>
 <script>/* Somente encerra após inicialização efetiva, sem atraso artificial. */
@@ -1836,6 +1844,16 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
  modal.addEventListener('click',e=>{if(e.target===modal)close();});
  document.addEventListener('keydown',e=>{if(!modal.hidden&&e.key==='Escape')close();});
 })();
+</script>
+
+<script>
+/* PWA: registro independente do aplicativo */
+if ('serviceWorker' in navigator && window.isSecureContext) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./service-worker.js', {scope:'./'})
+      .catch(error => console.warn('PWA indisponível:', error));
+  });
+}
 </script>
 </body>
 </html>
